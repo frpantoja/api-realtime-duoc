@@ -13,6 +13,8 @@ def inicio():
 def recibir_datos():
     data = request.get_json()
 
+    print("POST RECIBIDO EN /recibir-datos:", data, flush=True)
+
     registro = {
         "fecha_recepcion": datetime.now().isoformat(),
         "data": data
