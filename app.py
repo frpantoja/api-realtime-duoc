@@ -28,3 +28,22 @@ def recibir_datos():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
+@app.route("/ver-datos", methods=["GET"])
+def ver_datos():
+    datos = []
+
+    try:
+        with open("datos_realtime.jsonl", "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                datos.append(json.loads(linea))
+    except FileNotFoundError:
+        return jsonify({
+            "mensaje": "Aún no hay datos recibidos",
+            "datos": []
+        }), 200
+
+    return jsonify({
+        "total_registros": len(datos),
+        "datos": datos
+    }), 200
